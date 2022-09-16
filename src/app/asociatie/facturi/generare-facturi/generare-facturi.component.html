@@ -1,0 +1,38 @@
+<div class="container">
+    <mat-card class="modificare-card">
+      <mat-card-header>
+        <mat-card-title>{{titluSiButon}} facturi</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-card-subtitle>Selectați luna, anul si faceti click pe butonul {{titluSiButon}} facturi.</mat-card-subtitle>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Luna si anul</mat-label>
+              <input matInput [matDatepicker]="dp" [formControl]="date">
+              <mat-hint>LL/AAAA</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+              <mat-datepicker #dp
+                              startView="year"
+                              (monthSelected)="setMonthAndYear($event, dp)"
+                              panelClass="example-month-picker">
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-card-subtitle >*Datele sunt obligatorii.<p style="color:indianred">{{danger}}</p></mat-card-subtitle>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="container">
+          <div class="row">
+            <div class="col button-align-center">
+              <button mat-raised-button color="primary" (click)="generareFacturi()">{{titluSiButon}} facturi</button>
+            </div>
+            <div class="col button-align-center">
+              <a mat-flat-button mat-dialog-close>Inchide</a>
+            </div>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+</div>

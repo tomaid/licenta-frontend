@@ -1,0 +1,61 @@
+.servicii-card {
+  min-width: 300px;
+  max-width: 97%;
+  margin: 20px auto;
+  box-shadow: 0 2px 20px -3px #333;
+  padding: 0px !important;
+}
+.alignright {
+  text-align: right;
+  alignment: right;
+  width: 50%;
+  float: right;
+  padding-right: 1%;
+}
+.alignleft {
+  text-align: left;
+  alignment: left;
+  width: 50%;
+  float: left;
+  padding-top: 1%;
+}
+.mat-column-nume{
+  width: 25%!important;
+  padding: 0px;
+
+}
+.mat-column-serviciu{
+  width: 25%!important;
+  padding: 0px;
+
+}
+.mat-column-suma{
+  width: 25%!important;
+  padding: 0px;
+}
+.mat-column-text{
+  width: 45%!important;
+  padding: 0px;
+
+}
+.padding-top{
+  padding-top: 40px;
+}
+.middle-align{
+  padding: 1%;
+}
+.align-center {
+  text-align: center;
+}
+.table-style{
+  width: 100%;
+}
+.table-tr-boarder{
+  border-width: 1px;
+  border-color: lightgrey;
+}
+.table-td-boarder{
+  border-width: 1px;
+  border-color: lightgrey;
+}
+

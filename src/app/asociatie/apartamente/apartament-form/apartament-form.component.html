@@ -1,0 +1,137 @@
+<div class="container">
+  <form [formGroup]="apartamentForm" novalidate (ngSubmit)="setApartament()" layout-align="center">
+    <mat-card class="modificare-asociatie-card">
+      <mat-card-header>
+        <mat-card-title>{{title}} apartament</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Nume proprietar</mat-label>
+              <input matInput placeholder="Nume proprietar" formControlName="nume">
+              <mat-error *ngIf="apartamentForm.controls['nume'].hasError('required')">
+                Introduceți <strong>numele proprietarului</strong> apartamentului!
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['nume'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['nume'].hasError('pattern')">
+                Introduceti doar <strong>litere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Prenume proprietar</mat-label>
+              <input matInput placeholder="Prenume proprietar" formControlName="prenume">
+              <mat-error *ngIf="apartamentForm.controls['prenume'].hasError('required')">
+                Introduceți <strong>prenumele proprietarului</strong> apartamentului!
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['prenume'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['prenume'].hasError('pattern')">
+                Introduceti doar <strong>litere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Numar apartament</mat-label>
+              <input matInput placeholder="Numar apartament" formControlName="numar">
+              <mat-error *ngIf="apartamentForm.controls['numar'].hasError('required')">
+                Numarul apartamentului este <strong>obligatoriu</strong>!
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['nume'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Suprafața apartamentului</mat-label>
+              <input matInput placeholder="Suprafața apartamentului" formControlName="suprafataMp">
+              <mat-error *ngIf="apartamentForm.controls['suprafataMp'].hasError('required')">
+                Introduceți <strong>suprafața</strong> apartamentului!
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['suprafataMp'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['suprafataMp'].hasError('pattern')">
+                Introduceti doar <strong>numere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Număr locatari</mat-label>
+              <input matInput placeholder="Număr locatari" formControlName="numarLocatari">
+              <mat-error *ngIf="apartamentForm.controls['numarLocatari'].hasError('required')">
+                Introduceți <strong>numarul de locatari </strong> ai apartamentului!
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['numarLocatari'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['numarLocatari'].hasError('pattern')">
+                Introduceti doar <strong>numere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Telefon proprietar</mat-label>
+              <input matInput placeholder="Telefon proprietar" formControlName="telefon">
+              <mat-error *ngIf="apartamentForm.controls['telefon'].hasError('required')">
+                Numarul de telefon este <strong>obligatoriu</strong>
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['telefon'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['telefon'].hasError('pattern')">
+                Introduceti doar <strong>numere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Email proprietar</mat-label>
+              <input matInput placeholder="Email proprietar" formControlName="email">
+              <mat-error *ngIf="apartamentForm.controls['email'].hasError('required')">
+                Numarul de telefon este <strong>obligatoriu</strong>
+              </mat-error>
+              <mat-error *ngIf="apartamentForm.controls['email'].hasError('pattern')">
+                Introduceti doar <strong>numere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-card-subtitle>*Datele sunt obligatorii.</mat-card-subtitle>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="container">
+          <div class="row">
+            <div class="col button-align-center">
+              <button mat-raised-button color="primary" type="submit">{{actionButton}} apartament</button>
+            </div>
+            <div class="col button-align-center">
+              <a mat-flat-button mat-dialog-close>Inchide</a>
+            </div>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

@@ -1,0 +1,56 @@
+<div class="container">
+  <form [formGroup]="serviciuForm" novalidate (ngSubmit)="onModificareServiciu()" layout-align="center">
+    <mat-card class="modificare-asociatie-card">
+      <mat-card-header>
+        <mat-card-title>Modificare serviciu</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Nume serviciu</mat-label>
+              <input matInput placeholder="Nume serviciu" formControlName="nume">
+              <mat-error *ngIf="serviciuForm.controls['nume'].hasError('required')">
+                Numele serviciului este <strong>obligatoriu</strong>!
+              </mat-error>
+              <mat-error *ngIf="serviciuForm.controls['nume'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Prețul serviciului</mat-label>
+              <input matInput placeholder="Prețul serviciului" formControlName="pret">
+              <mat-error *ngIf="serviciuForm.controls['pret'].hasError('required')">
+                Introduceți <strong>prețul</strong> serviciului!
+              </mat-error>
+              <mat-error *ngIf="serviciuForm.controls['pret'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="serviciuForm.controls['pret'].hasError('pattern')">
+                Introduceti doar <strong>numere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-card-subtitle>*Datele sunt obligatorii.</mat-card-subtitle>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="container">
+          <div class="row">
+            <div class="col button-align-center">
+              <button mat-raised-button color="primary" type="submit">Actualizare date</button>
+            </div>
+            <div class="col button-align-center">
+              <a mat-flat-button mat-dialog-close>Inchide</a>
+            </div>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

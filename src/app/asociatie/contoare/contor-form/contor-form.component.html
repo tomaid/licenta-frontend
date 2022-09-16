@@ -1,0 +1,69 @@
+<div class="container">
+  <form [formGroup]="contorForm" novalidate (ngSubmit)="setContor()" layout-align="center">
+    <mat-card class="modificare-asociatie-card">
+      <mat-card-header>
+        <mat-card-title>{{title}} contor</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div class="row"  [hidden]="(modif==1)">
+          <div class="col">
+            <mat-form-field appearance="fill" formGroupName="tip">
+              <mat-label>Alegeți tipul contorului</mat-label>
+              <mat-select [(ngModel)]="selectedValue" formControlName="id" (selectionChange)="this.listOptiuni()">
+                <mat-option *ngFor="let optiune of optiuniSelect" [value]="optiune.id">
+                  {{optiune.optiune}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="contorForm.controls['tip'].hasError('required')">
+                Selectati <strong>tipul</strong> contorului!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" [hidden]="!(selectedValue == 1 || selectedValue == 2)">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Nume contor</mat-label>
+              <input matInput placeholder="Nume contor" formControlName="nume">
+              <mat-error *ngIf="contorForm.controls['nume'].hasError('required')">
+                Introduceți <strong>numele</strong> contorului!
+              </mat-error>
+              <mat-error *ngIf="contorForm.controls['nume'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" [hidden]="!((selectedValue == 1)&& !(modif==1))">
+        <div class="col">
+          <mat-form-field appearance="fill" formGroupName="idApartament">
+            <mat-label>Apartament</mat-label>
+            <mat-select formControlName="id"  [(ngModel)]="apartamentId" required>
+              <mat-option *ngFor="let apartament of apartamente" [value]="apartament.id">
+                {{ apartament.numar }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="contorForm.controls['idApartament'].hasError('required')">
+              Selectati <strong>apartamentul</strong>!
+            </mat-error>
+          </mat-form-field>
+        </div></div>
+
+        <mat-card-subtitle>*Datele sunt obligatorii.</mat-card-subtitle>
+      </mat-card-content>
+      <mat-card-actions [hidden]="(selectedValue ==-1)">
+        <div class="container">
+          <div class="row">
+            <div class="col button-align-center">
+              <button mat-raised-button color="primary" type="submit">{{actionButton}} contor</button>
+            </div>
+            <div class="col button-align-center">
+              <a mat-flat-button mat-dialog-close>Inchide</a>
+            </div>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

@@ -1,0 +1,82 @@
+<app-asociatie-header>
+
+  <mat-card class="servicii-card">
+    <mat-card-header>
+      <div class="alignleft">
+        <mat-card-title-group><mat-card-title>Facturi apartamente</mat-card-title>
+        </mat-card-title-group>
+      </div>
+      <div>
+        <mat-form-field appearance="standard">
+          <mat-label>Filtrare</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="ex: 6A" #cautare_factura>
+        </mat-form-field>
+      </div>
+      <div class="alignright">
+        <mat-card-actions>
+          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Generare facturi" color="primary" (click)="regenerareFacturi()">
+            <mat-icon>add_box</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Generare facturi</span>
+          </button>
+        </mat-card-actions>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+        <!--  Coloana apartament -->
+        <ng-container matColumnDef="apartamentNume" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Apartament</th>
+          <td mat-cell *matCellDef="let factura"> {{this.upperLowerTitleCaseService.upperCase(factura.apartamentNume)}} </td>
+        </ng-container>
+        <!--  Coloana data -->
+        <ng-container matColumnDef="data" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data facturare</th>
+          <td mat-cell *matCellDef="let factura"> {{factura.data |  date:'dd.MM.YYYY'}}  </td>
+        </ng-container>
+        <!--  Coloana valoare -->
+        <ng-container matColumnDef="valoare" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Valoare</th>
+          <td mat-cell *matCellDef="let factura"> {{this.upperLowerTitleCaseService.titleCase(factura.valoare)}} RON</td>
+        </ng-container>
+        <!--  Coloana data scadenta -->
+        <ng-container matColumnDef="dataScadenta" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data scadenta</th>
+          <td mat-cell *matCellDef="let factura"> {{factura.dataScadenta |  date:'dd.MM.YYYY'}}  </td>
+        </ng-container>
+        <!--  Coloana restante -->
+        <ng-container matColumnDef="valoareRestante" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Restante</th>
+          <td mat-cell *matCellDef="let factura"> {{this.upperLowerTitleCaseService.titleCase(factura.valoareRestante)}} RON</td>
+        </ng-container>
+        <!--  Coloana status -->
+        <ng-container matColumnDef="status" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let factura"> {{factura.status}}  </td>
+        </ng-container>
+        <!--  Coloana actiuni -->
+        <ng-container matColumnDef="actiuni" class="mat-column-actiuni">
+          <th mat-header-cell *matHeaderCellDef> Actiuni </th>
+          <td mat-cell *matCellDef="let factura">
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Editare" color="primary" (click)="vizualizareFactura(factura)">
+              <mat-icon>pageview</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Vizualizare</span>
+            </button>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">Nu am gasit factura cu filtrul: "{{cautare_factura.value}}"</td>
+        </tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+
+</app-asociatie-header>

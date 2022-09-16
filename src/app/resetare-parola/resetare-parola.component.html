@@ -1,0 +1,44 @@
+<div class="middle-align">
+  <form [formGroup]="resetForm" novalidate (ngSubmit)="onSubmit()" layout-align="center">
+    <mat-card class="reset-card">
+      <mat-card-header class="align-center">
+        <mat-card-title>Resetare parola</mat-card-title>
+        <mat-card-subtitle>Introduceti email-ul folosit la crearea contului. Daca email-ul este valid veti primi email cu noua parola.</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col align-center">
+            <mat-form-field appearance="fill">
+              <mat-label>E-mail</mat-label>
+              <input matInput placeholder="Email" formControlName="username">
+              <mat-icon matSuffix>email</mat-icon>
+              <mat-error *ngIf="resetForm.controls['username'].hasError('required')">
+                Introduceti <strong>email-ul</strong>!
+              </mat-error>
+              <mat-error *ngIf="resetForm.controls['username'].hasError('email')">
+                Email-ul nu este <strong>corect</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="container">
+          <div class="row">
+            <div class="col align-center">
+              <button mat-raised-button color="primary" type="submit">Resetare parola</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col align-center padding-top">
+              <a mat-flat-button (click)="navigateTo('inregistrare')">Inregistrare </a>
+            </div>
+            <div class="col align-center padding-top">
+              <a mat-flat-button (click)="navigateTo('autentificare')">Autentificare </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

@@ -1,0 +1,148 @@
+<app-locatar-header>
+  <mat-card class="servicii-card">
+    <mat-card-header>
+      <div class="alignleft">
+        <mat-card-title-group><mat-card-title>Optimizare consum energetic</mat-card-title>
+        </mat-card-title-group>
+      </div>
+      <div class="alignright">
+        <mat-card-actions>
+          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Inapoi" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Inapoi</span>
+          </button>
+        </mat-card-actions>
+      </div>
+    </mat-card-header>
+      <mat-card-content class="paddingtop">
+        <mat-card-subtitle><p>Aplicația vine în sprijinul persoanelor care doresc înlocuirea produselor degradate cu altele noi. Începeți prin a introduce bugetul alocat pentru actualizare electronice/electrocasnice, adăugați în listă produsele pe care vreți să le cumpărați si apăsați butonul "Căutare"</p></mat-card-subtitle>
+        <div class="row">
+          <div class="col">
+            <span class="spacer"></span>
+            <mat-form-field appearance="fill">
+              <mat-label>Introduceti bugetul alocat</mat-label>
+              <input matInput placeholder="ex: 10000" [(ngModel)]="buget" aria-placeholder="ex 1000">
+              <mat-hint>valoare in RON</mat-hint>
+            </mat-form-field>
+            <span class="spacer"></span>
+          </div>
+        </div>
+        <div class="row">
+          <span class="spacer"></span>
+          <mat-card-subtitle class="paddingtop-subtitle">Introduceți produse în lista de mai jos astfel: selectați un produs din lista, introduceți de câte ori il folosiți pe lună și cât timp durează folosirea acelui produs.</mat-card-subtitle>
+
+          <div class="col">
+            <mat-form-field appearance="fill" class="mat-select-asoc" >
+              <mat-label class="label-asoc">Alegeti produs</mat-label>
+              <mat-select  [(value)]="iDcategorie" (selectionChange)="onSelectChange($event)">
+                <mat-option *ngFor="let categorie of categorii" [value]="categorie.id">
+                  {{categorie.denumire}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <span class="spacer"></span>
+          </div>
+          <div class="col">
+            <span class="spacer"></span>
+            <mat-form-field appearance="fill">
+              <mat-label>Număr cicluri intr-o lună</mat-label>
+              <input matInput placeholder="numar cicluri intr-o luna" [(ngModel)]="nrCicluri" aria-placeholder="ex 20">
+            </mat-form-field>
+            <span class="spacer"></span>
+          </div>
+          <div class="col">
+            <span class="spacer"></span>
+            <mat-form-field appearance="fill">
+              <mat-label>Durată ciclu</mat-label>
+              <input matInput placeholder="durata unui ciclu in minute" [(ngModel)]="durataCiclu" aria-placeholder="ex 20">
+            </mat-form-field>
+            <span class="spacer"></span>
+          </div>
+          <div class="col">
+            <span class="spacer"></span>
+            <p></p>
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  color="primary" aria-label="Adaugare" (click)="adaugare()">
+              <mat-icon>add</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Adaugare</span>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+              <!--  Coloana denumire -->
+              <ng-container matColumnDef="denumire" class="mat-column-nume" matSort>
+                <th mat-header-cell class="mat-column-nume" *matHeaderCellDef>Denumire</th>
+                <td mat-cell *matCellDef="let produs"> {{this.upperLowerTitleCaseService.titleCase(produs.denumireCategorie)}} </td>
+              </ng-container>
+              <!--  ciclu -->
+              <ng-container matColumnDef="ciclu" class="mat-column-nume" matSort>
+                <th class="mat-column-suma" mat-header-cell *matHeaderCellDef>Numar cicluri folosire</th>
+                <td mat-cell *matCellDef="let produs"> {{produs.cicluNumere}}</td>
+              </ng-container>
+              <!--  durata -->
+              <ng-container matColumnDef="durata" class="mat-column-nume">
+                <th mat-header-cell class="mat-column-text" *matHeaderCellDef>Durata ciclu</th>
+                <td mat-cell *matCellDef="let produs"> {{produs.durataCiclu}} </td>
+              </ng-container>
+              <!-- actiuni -->
+              <ng-container matColumnDef="actiuni" class="mat-column-actiuni">
+                <th mat-header-cell *matHeaderCellDef> Actiuni </th>
+                <td mat-cell *matCellDef="let produs">
+                  <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Stergere" color="warn" (click)="delete(produs)">
+                    <mat-icon>delete</mat-icon>
+                    <span *ngIf="!(isHandset$ | async)">Stergere</span>
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+            <p></p>
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  color="primary" aria-label="Cautare" (click)="cautare()">
+              <mat-icon>search</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Cautare</span>
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    <mat-card-content  *ngFor="let itemsArray of variantePrimiteDelaAlgoritm">
+      <table multiTemplateDataRows class="mat-elevation-z8 table-style" matSort>
+        <thead>
+        <tr>
+          <th colspan="3" class="align-center table-td-boarder">{{itemsArray.varianta}}</th>
+        </tr>
+        <tr>
+          <th class="align-center table-td-boarder tablewidh33">Denumire Produs</th>
+          <th class="align-center table-td-boarder">Pret</th>
+          <th class="align-center table-td-boarder">Consum lunar exprimat în kw</th>
+          <th class="align-center table-td-boarder">Actiuni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-tr-boarder tablewidh33" *ngFor="let item of itemsArray.produsePrimite">
+          <td class="align-center table-td-boarder">{{item.denumire}}</td>
+          <td class="align-center table-td-boarder">{{item.pret | number}}</td>
+          <td class="align-center table-td-boarder">{{item.consum/1000 | number}}</td>
+          <td class="align-center table-td-boarder">          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  color="primary" aria-label="Imprimare" (click)="printToPDF();">
+            <mat-icon>add_shopping_cart</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Cumpara</span>
+          </button></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td class="align-center table-td-boarder">Total</td>
+          <td class="align-center table-td-boarder">{{itemsArray.pretTotal | number}} RON</td>
+          <td class="align-center table-td-boarder">{{itemsArray.totalKw/1000 | number}} </td>
+        </tr>
+        </tfoot>
+      </table>
+    </mat-card-content>
+    <mat-card-header>
+      <mat-card-subtitle>În funcție de bugetul ales, algoritmul genetic implementat caută varianta de produse cu consumul cel mai mic de energie cu bugetul ales.</mat-card-subtitle>
+    </mat-card-header>
+
+  </mat-card>
+</app-locatar-header>

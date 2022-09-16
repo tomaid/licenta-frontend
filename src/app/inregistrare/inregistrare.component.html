@@ -1,0 +1,115 @@
+<div class="middle-align container">
+  <form [formGroup]="registerForm" novalidate (ngSubmit)="onSubmit()" layout-align="center">
+    <mat-card class="register-card">
+      <mat-card-header>
+        <mat-card-title>Înregistrare utilizator nou</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Prenume</mat-label>
+              <input matInput placeholder="Prenume" formControlName="prenume">
+              <mat-error *ngIf="registerForm.controls['prenume'].hasError('required')">
+                Prenumele este <strong>obligatoriu</strong>!
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['prenume'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['prenume'].hasError('pattern')">
+                Introduceti doar <strong>litere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Nume</mat-label>
+              <input matInput placeholder="Nume" formControlName="nume">
+              <mat-error *ngIf="registerForm.controls['nume'].hasError('required')">
+                Numele este <strong>obligatoriu</strong>!
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['nume'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['nume'].hasError('pattern')">
+                Introduceti doar <strong>litere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Telefon</mat-label>
+              <input matInput placeholder="Telefon" formControlName="telefon">
+              <mat-error *ngIf="registerForm.controls['telefon'].hasError('required')">
+                Numarul de telefon este <strong>obligatoriu</strong>
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['telefon'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['telefon'].hasError('pattern')">
+                Introduceti doar <strong>numere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="fill" formGroupName="role">
+              <mat-label>Tip cont</mat-label>
+              <mat-select formControlName="id">
+                <mat-option *ngFor="let role of roles" [value]="role.id">
+                  {{ role.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="registerForm.controls['role'].hasError('required')">
+                Selectati <strong>tipul</strong> contului!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Email" formControlName="user">
+              <mat-error *ngIf="registerForm.controls['user'].hasError('required')">
+                Email-ul este <strong>obligatoriu</strong>
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['user'].hasError('email')">
+                Email-ul nu este <strong>corect</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Parola</mat-label>
+              <input matInput placeholder="Parola" formControlName="pass" [type]="fieldTextType ? 'text' : 'password'">
+              <mat-icon matSuffix (click)="togglePassword()">{{iconText}}</mat-icon>
+              <mat-error *ngIf="registerForm.controls['pass'].hasError('required')">
+                Introduceti <strong>parola</strong>!
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['pass'].hasError('maxlength')">
+                Lungimea maxima a parolei este de <strong>128</strong> caractere!
+              </mat-error>
+              <mat-error *ngIf="registerForm.controls['pass'].hasError('pattern')">
+                Lungimea parolei trebuie sa fie de minim 8 caractere, sa conțină un număr, un caracter special si o majusculă!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="container">
+          <div class="row">
+        <div class="col button-align-center">
+        <button mat-raised-button color="primary" type="submit">Inregistrare</button>
+        </div>
+        <div class="col button-align-center">
+        <a mat-flat-button (click)="navigateTo('autentificare')">Autentificare </a>
+          </div>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

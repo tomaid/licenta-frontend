@@ -1,0 +1,182 @@
+<mat-toolbar color="primary" class="toolbar-container-top">
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Navigatie">
+    <mat-icon (click)="drawer.toggle()"
+              *ngIf="isHandset$ | async">menu</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Cont</span>
+  </button>
+  <span class="spacer"></span>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  (click)="acasa()" aria-label="Acasa">
+    <mat-icon>home</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Acasa</span>
+  </button>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Ajutor">
+    <mat-icon>help_outline</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Ajutor</span>
+  </button>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  (click)="logout()" aria-label="Iesire">
+    <mat-icon>highlight_off</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Iesire</span>
+  </button>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
+    <mat-nav-list>
+      <a  mat-list-item>Detalii cont</a>
+      <a  mat-list-item (click)="acasa()"><mat-icon>arrow_back</mat-icon>Inapoi</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="row">
+    <div class="middle-align container col">
+      <form [formGroup]="detaliiContForm" novalidate (ngSubmit)="onSubmit()" layout-align="center">
+        <mat-card class="cont-card">
+          <mat-card-header>
+            <mat-card-title>Date cont</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col">
+                <mat-form-field appearance="fill">
+                  <mat-label>Prenume</mat-label>
+                  <input matInput placeholder="Prenume" formControlName="prenume">
+                  <mat-error *ngIf="detaliiContForm.controls['prenume'].hasError('required')">
+                    Prenumele este <strong>obligatoriu</strong>!
+                  </mat-error>
+                  <mat-error *ngIf="detaliiContForm.controls['prenume'].hasError('maxlength')">
+                    Ati depasit <strong>limita</strong> de caractere!
+                  </mat-error>
+                  <mat-error *ngIf="detaliiContForm.controls['nume'].hasError('pattern')">
+                    Introduceti doar <strong>litere</strong>!
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field appearance="fill">
+                  <mat-label>Nume</mat-label>
+                  <input matInput placeholder="Nume" formControlName="nume">
+                  <mat-error *ngIf="detaliiContForm.controls['nume'].hasError('required')">
+                    Numele este <strong>obligatoriu</strong>!
+                  </mat-error>
+                  <mat-error *ngIf="detaliiContForm.controls['nume'].hasError('maxlength')">
+                    Ati depasit <strong>limita</strong> de caractere!
+                  </mat-error>
+                  <mat-error *ngIf="detaliiContForm.controls['nume'].hasError('pattern')">
+                    Introduceti doar <strong>litere</strong>!
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field appearance="fill">
+                  <mat-label>Telefon</mat-label>
+                  <input matInput placeholder="Telefon" formControlName="telefon">
+                  <mat-error *ngIf="detaliiContForm.controls['telefon'].hasError('required')">
+                    Numarul de telefon este <strong>obligatoriu</strong>
+                  </mat-error>
+                  <mat-error *ngIf="detaliiContForm.controls['telefon'].hasError('maxlength')">
+                    Ati depasit <strong>limita</strong> de caractere!
+                  </mat-error>
+                  <mat-error *ngIf="detaliiContForm.controls['telefon'].hasError('pattern')">
+                    Introduceti doar <strong>numere</strong>!
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field appearance="fill">
+                  <mat-label>Email</mat-label>
+                  <input matInput placeholder="Email" formControlName="user">
+                  <mat-error *ngIf="detaliiContForm.controls['user'].hasError('required')">
+                    Email-ul este <strong>obligatoriu</strong>
+                  </mat-error>
+                  <mat-error *ngIf="detaliiContForm.controls['user'].hasError('email')">
+                    Email-ul nu este <strong>corect</strong>!
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <mat-card-subtitle>Pentru a actualiza datele contului, apasati butonul "Actualizare".</mat-card-subtitle>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="container">
+              <div class="row">
+                <div class="col button-align-center">
+                  <button mat-raised-button color="primary" type="submit">Actualizare</button>
+                </div>
+                <div class="col button-align-center">
+                  <a mat-flat-button (click)="acasa()">Anulare </a>
+                </div>
+              </div>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+    <div class="middle-align container col center-align">
+      <form [formGroup]="modificareParolaForm" novalidate (ngSubmit)="modificareParola()" layout-align="center">
+        <mat-card class="password-card">
+          <mat-card-header>
+            <mat-card-title class="title-card-center">Actualizare parola</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col">
+                <mat-form-field appearance="fill">
+                  <mat-label>Parola veche</mat-label>
+                  <input matInput placeholder="Parola veche" formControlName="parolaVeche" [type]="fieldTextType ? 'text' : 'password'">
+                  <mat-icon matSuffix (click)="togglePassword()">{{iconText}}</mat-icon>
+                  <mat-error *ngIf="modificareParolaForm.controls['parolaVeche'].hasError('required')">
+                    Introduceti <strong>parola</strong>!
+                  </mat-error>
+                  <mat-error *ngIf="modificareParolaForm.controls['parolaVeche'].hasError('minlength')">
+                    Lungimea minima a parolei este de <strong>8</strong> caractere!
+                  </mat-error>
+                  <mat-error *ngIf="modificareParolaForm.controls['parolaVeche'].hasError('maxlength')">
+                    Lungimea maxima a parolei este de <strong>128</strong> caractere!
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Parola noua</mat-label>
+                    <input matInput placeholder="Parola noua" formControlName="parolaNoua" [type]="fieldTextTypeNew ? 'text' : 'password'">
+                    <mat-icon matSuffix (click)="togglePasswordNew()">{{iconTextNew}}</mat-icon>
+                    <mat-error *ngIf="modificareParolaForm.controls['parolaNoua'].hasError('required')">
+                      Introduceti <strong>parola</strong>!
+                    </mat-error>
+                    <mat-error *ngIf="modificareParolaForm.controls['parolaNoua'].hasError('minlength')">
+                      Lungimea minima a parolei este de <strong>8</strong> caractere!
+                    </mat-error>
+                    <mat-error *ngIf="modificareParolaForm.controls['parolaNoua'].hasError('pattern')">
+                      Lungimea parolei trebuie sa fie de minim 8 caractere, sa conțină un număr, un caracter special si o majusculă!
+                    </mat-error>
+                  </mat-form-field>
+                <br><br><br>
+              </div>
+            </div>
+            <mat-card-subtitle>Pentru a modifica parola, introduceti parola veche, apoi introduceti parola noua si apasati butonul "Modificare".</mat-card-subtitle>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="container">
+              <div class="row">
+                <div class="col button-align-center">
+                  <button mat-raised-button color="primary" type="submit">Modificare</button>
+                </div>
+                <div class="col button-align-center">
+                  <a mat-flat-button (click)="acasa()">Anulare </a>
+                </div>
+              </div>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

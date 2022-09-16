@@ -1,0 +1,18 @@
+.ajutor-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ajutor-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+.ajutor-action-buttons {
+  padding-bottom: 20px;
+}
+.ajutor-card {
+  min-width: 300px;
+  max-width: 70%;
+  margin: 20px auto;
+  box-shadow: 0 2px 20px -3px #333;
+  padding: 0px !important;
+}

@@ -1,0 +1,53 @@
+<mat-toolbar color="primary" class="toolbar-container-top">
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Navigatie">
+    <mat-icon (click)="drawer.toggle()"
+              *ngIf="isHandset$ | async">menu</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Admin</span>
+  </button>
+  <span class="spacer"></span>
+  <mat-form-field appearance="legacy" class="mat-select-asoc" *ngIf="showMenu">
+    <mat-label class="label-asoc">Alegeti asociatia</mat-label>
+    <mat-select  [(value)]="selected" (selectionChange)="onSelectChange()">
+            <mat-option *ngFor="let asociatie of asociatii" [value]="asociatie.id">
+              {{asociatie.nume}}
+            </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <span class="spacer"></span>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  routerLink="/asociatie/creare-asociatie" aria-label="Creare asociatie">
+    <mat-icon>create_new_folder</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Creare asociatie</span>
+  </button>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  routerLink="/locatar" aria-label="Locatar">
+    <mat-icon>home</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Locatar</span>
+  </button>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Ajutor" routerLink="/asociatie/ajutor">
+    <mat-icon>help_outline</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Ajutor</span>
+  </button>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  (click)="logout()" aria-label="Iesire">
+    <mat-icon>highlight_off</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Iesire</span>
+  </button>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
+    <mat-nav-list *ngIf="showMenu">
+      <a  mat-list-item [routerLink]="'/asociatie/avizier'">Avizier</a>
+      <a  mat-list-item [routerLink]="'/asociatie/servicii'">Servicii</a>
+      <a  mat-list-item [routerLink]="'/asociatie/apartamente'">Apartamente</a>
+      <a  mat-list-item [routerLink]="'/asociatie/cheltuieli'">Cheltuieli</a>
+      <a  mat-list-item [routerLink]="'/asociatie/facturi'">Facturi</a>
+      <a  mat-list-item [routerLink]="'/asociatie/detalii-asociatie'">Date asociatie</a>
+      <a  mat-list-item [routerLink]="'/detalii-cont'">Date cont</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

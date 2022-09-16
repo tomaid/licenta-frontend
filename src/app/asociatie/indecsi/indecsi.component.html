@@ -1,0 +1,46 @@
+<app-asociatie-header>
+
+  <mat-card class="servicii-card">
+    <mat-card-header>
+      <div class="alignleft">
+        <mat-card-title-group><mat-card-title>Istoric indecsi pentru serviciul "{{this.numeServiciu}}", contor {{this.numeContor}},  {{this.titluApt}} {{this.numarApartament}}</mat-card-title>
+        </mat-card-title-group>
+      </div>
+      <div class="alignright">
+        <mat-card-actions>
+          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Inapoi" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Inapoi</span>
+          </button>
+        </mat-card-actions>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+        <!--  Coloana data -->
+        <ng-container matColumnDef="data" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+          <td mat-cell *matCellDef="let contor"> {{contor.dataCitire}} </td>
+        </ng-container>
+        <!--  Coloana valoare -->
+        <ng-container matColumnDef="valoare" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Valoare</th>
+          <td mat-cell *matCellDef="let contor"> {{contor.valoareIndex}} </td>
+        </ng-container>
+        <!--  Coloana consum -->
+        <ng-container matColumnDef="consum" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Consum</th>
+          <td mat-cell *matCellDef="let contor"> {{contor.consum}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+      </table>
+      <mat-paginator [pageSizeOptions]="[12, 24, 36]" aria-label="Select page of users"></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+
+</app-asociatie-header>

@@ -1,0 +1,61 @@
+<div class="middle-align">
+  <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" layout-align="center">
+    <mat-card class="register-card">
+      <mat-card-header class="align-center">
+        <mat-card-title>Autentificare</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col align-center">
+            <mat-form-field appearance="fill">
+              <mat-label>ID utilizator</mat-label>
+              <input matInput placeholder="Email" formControlName="username">
+              <mat-icon matSuffix>account_box</mat-icon>
+              <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
+                Introduceti <strong>email-ul</strong>!
+              </mat-error>
+              <mat-error *ngIf="loginForm.controls['username'].hasError('email')">
+                Email-ul nu este <strong>corect</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col align-center">
+            <mat-form-field appearance="fill">
+              <mat-label>Parola</mat-label>
+              <input matInput placeholder="Parola" formControlName="password" [type]="fieldTextType ? 'text' : 'password'">
+              <mat-icon matSuffix (click)="toggleFieldTextType()">{{iconText}}</mat-icon>
+              <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+                Introduceti <strong>parola</strong>!
+              </mat-error>
+              <mat-error *ngIf="loginForm.controls['password'].hasError('minlength')">
+                Lungimea minima a parolei este de <strong>8</strong> caractere!
+              </mat-error>
+              <mat-error *ngIf="loginForm.controls['password'].hasError('maxlength')">
+                Lungimea maxima a parolei este de <strong>128</strong> caractere!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="container">
+          <div class="row">
+            <div class="col align-center">
+              <button mat-raised-button color="primary" type="submit">Autentificare</button>
+            </div>
+            </div>
+          <div class="row">
+            <div class="col align-center padding-top">
+              <a mat-flat-button (click)="navigateTo('inregistrare')">Inregistrare </a>
+            </div>
+            <div class="col align-center padding-top">
+              <a mat-flat-button (click)="navigateTo('resetare-parola')">Resetare parola </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

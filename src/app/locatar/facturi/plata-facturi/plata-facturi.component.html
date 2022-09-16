@@ -1,0 +1,112 @@
+<div class="container">
+  <form [formGroup]="plataForm" novalidate (ngSubmit)="plata()" layout-align="center">
+    <mat-card class="plata-card">
+      <mat-card-header>
+        <mat-card-title>Plata factura pentru apartamentul {{upperLowerTitleCaseService.upperCase(facturaInfo.apartamentNumar)}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col" class="middle-align">
+            <mat-form-field appearance="fill">
+              <mat-label>Suma totală</mat-label>
+              <input matInput placeholder="Suma totală" formControlName="valoare" (keyup)="verificare(sumaIntrodusa.value)" #sumaIntrodusa>
+              <mat-error *ngIf="plataForm.controls['valoare'].hasError('required')">
+                Introduceți <strong>suma totala</strong>!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['valoare'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['valoare'].hasError('pattern')">
+                Introduceti doar <strong>cifre</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+          <div class="row">
+          <div class="col" class="middle-align">
+            <p><mat-hint>Introduceți datele cardului:</mat-hint></p>
+            <mat-form-field appearance="fill">
+              <mat-label>Numar card</mat-label>
+              <input matInput placeholder="Numar card" formControlName="card"  (blur)="this.verifCardFunc(numarCard.value)" #numarCard>
+              <mat-error *ngIf="plataForm.controls['card'].hasError('required')">
+                Introduceți <strong>numarul cardului</strong>!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['card'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['card'].hasError('pattern')">
+                Introduceti doar <strong>numere</strong>!
+              </mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" class="middle-align">
+            <p><mat-hint>Luna si anul expirarii</mat-hint></p>
+            <mat-form-field appearance="fill" class="reduce-width">
+              <mat-label>LL</mat-label>
+              <input matInput placeholder="LL" formControlName="lunaExpirare" >
+              <mat-error *ngIf="plataForm.controls['lunaExpirare'].hasError('required')">
+                Introduceți <strong>luna</strong>!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['lunaExpirare'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['lunaExpirare'].hasError('pattern')">
+                Introduceti doar <strong>numere</strong>!
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="reduce-width">
+              <mat-label>AAAA</mat-label>
+              <input matInput placeholder="AAAA" formControlName="anExpirare" >
+              <mat-error *ngIf="plataForm.controls['anExpirare'].hasError('required')">
+                Introduceți <strong>anul</strong>!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['anExpirare'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['anExpirare'].hasError('pattern')">
+                Introduceti doar <strong>numere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" class="middle-align">
+            <p><mat-hint>Introduceți codul CVC:</mat-hint></p>
+            <mat-form-field appearance="fill" class="reduce-width">
+              <mat-label>CVC</mat-label>
+              <input matInput placeholder="Numar card" formControlName="cvc" >
+              <mat-error *ngIf="plataForm.controls['cvc'].hasError('required')">
+                Introduceți <strong>numarul cele 3 cifre de control de pe spatele cardului</strong>!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['cvc'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['cvc'].hasError('pattern')">
+                Introduceti doar <strong>numere</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-card-subtitle class="middle-align">*Datele sunt obligatorii.</mat-card-subtitle>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="container">
+          <div class="row">
+            <div class="col button-align-center">
+              <button mat-raised-button color="primary" type="submit">Plată factura</button>
+            </div>
+            <div class="col button-align-center">
+              <a mat-flat-button mat-dialog-close (click)="close()">Inchide</a>
+            </div>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
+
+
+

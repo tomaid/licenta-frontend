@@ -1,0 +1,48 @@
+.sidenav-container {
+  height: 100%;
+}
+.toolbar-container-top {
+  z-index: 101;
+  top: 0;
+}
+.titlu{
+  font-size: 16px;
+}
+.toolbar-container-second {
+  top: 0;
+  height: fit-content;
+}
+.sidenav {
+  width: fit-content;
+  z-index: 100;
+  padding-top: 40px;
+}
+.matsize {
+  font-size: 12px;
+}
+.labelsize{
+  font-size: 12px;
+}
+.matplanelheight{
+  max-height: 40px;
+}
+.sidenav.mat-toolbar {
+  background: inherit;
+}
+.mat-toolbar.mat-primary {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  height: fit-content;
+  box-shadow: darkgrey;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+.mat-select-asoc {
+  height: 36px;
+  font-size: 14px;
+}
+.label-asoc{
+  font-size: 18px;
+}

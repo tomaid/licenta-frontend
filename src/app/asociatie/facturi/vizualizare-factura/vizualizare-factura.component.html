@@ -1,0 +1,91 @@
+<app-asociatie-header>
+  <mat-card class="servicii-card">
+    <mat-card-header>
+      <div class="alignleft">
+        <mat-card-title-group><mat-card-title>Factura pentru luna {{this.monthSwitch.switchLuna(facturaInfo.luna)}} {{facturaInfo.anul}} pentru apartamentul {{this.upperLowerTitleCaseService.upperCase(facturaInfo.apartamentNumar)}}</mat-card-title>
+        </mat-card-title-group>
+      </div>
+      <div class="alignright">
+        <mat-card-actions>
+          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Plata factura" color="primary" (click)="plataFactura();">
+            <mat-icon>payment</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Plata factura</span>
+          </button>
+          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Imprimare factura" (click)="printToPDF();">
+            <mat-icon>print</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Imprimare factura</span>
+          </button>
+          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Inapoi" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Inapoi</span>
+          </button>
+        </mat-card-actions>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div #printiD>
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+        <!--  Coloana apartament -->
+        <ng-container matColumnDef="detalii" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Detalii</th>
+          <td mat-cell *matCellDef="let facturaDetalii"> {{this.upperLowerTitleCaseService.titleCase(facturaDetalii.detalii)}} </td>
+        </ng-container>
+        <!--  Coloana valoare -->
+        <ng-container matColumnDef="valoare" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Valoare</th>
+          <td mat-cell *matCellDef="let facturaDetalii"> {{this.upperLowerTitleCaseService.titleCase(facturaDetalii.valoare)}} RON</td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+
+        <!-- Row shown when there is no matching data. -->
+      </table>
+      </div>
+<p></p>
+        <mat-card-title-group><mat-card-title>Total de plata: {{facturaInfo.valoare+facturaInfo.valoareRestante|currency:'RON'}}</mat-card-title>
+        </mat-card-title-group>
+      <mat-card-title-group><mat-card-title>Factura a fost achitata cu urmatoarele chitante</mat-card-title>
+      </mat-card-title-group>
+      <table mat-table [dataSource]="dataSource1" multiTemplateDataRows class="mat-elevation-z8" matSort>
+        <!--  Coloana apartament -->
+        <ng-container matColumnDef="serie" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Serie numar</th>
+          <td mat-cell *matCellDef="let chitante"> {{this.upperLowerTitleCaseService.titleCase(chitante.serieChitanta)}} {{chitante.id}} </td>
+        </ng-container>
+        <!--  Coloana valoare -->
+        <ng-container matColumnDef="valoare" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Valoare</th>
+          <td mat-cell *matCellDef="let chitante"> {{this.upperLowerTitleCaseService.titleCase(chitante.suma)}} RON</td>
+        </ng-container>
+        <!--  Coloana data -->
+        <ng-container matColumnDef="data" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data facturare</th>
+          <td mat-cell *matCellDef="let chitante"> {{chitante.dataAchitare |  date:'dd.MM.YYYY'}}  </td>
+        </ng-container>
+        <!--  Coloana actiuni -->
+        <ng-container matColumnDef="actiuni" class="mat-column-actiuni">
+          <th mat-header-cell *matHeaderCellDef> Actiuni </th>
+          <td mat-cell *matCellDef="let chitante">
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Editare" color="primary" (click)="vizualizareChitanta(chitante)">
+              <mat-icon>pageview</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Vizualizare</span>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+
+
+        <!-- Row shown when there is no matching data. -->
+      </table>
+      <p></p>
+      <mat-card-title-group><mat-card-title>Rest de plata: {{facturaInfo.valoare+facturaInfo.valoareRestante-facturaInfo.valoareAchitata |currency:'RON'}}</mat-card-title>
+      </mat-card-title-group>
+
+    </mat-card-content>
+  </mat-card>
+</app-asociatie-header>

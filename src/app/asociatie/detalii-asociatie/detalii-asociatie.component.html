@@ -1,0 +1,145 @@
+<app-asociatie-header>
+  <div class="middle-align container">
+    <form [formGroup]="AsociatieForm" novalidate (ngSubmit)="onSubmit()" layout-align="center">
+      <mat-card class="creare-asociatie-card">
+        <mat-card-header>
+          <mat-card-title>Actualizare date asociatie</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Nume asociatie</mat-label>
+                <input matInput placeholder="Nume Asociatie" formControlName="nume">
+                <mat-error *ngIf="AsociatieForm.controls['nume'].hasError('required')">
+                  Numele asociatiei este <strong>obligatoriu</strong>!
+                </mat-error>
+                <mat-error *ngIf="AsociatieForm.controls['nume'].hasError('maxlength')">
+                  Ati depasit <strong>limita</strong> de caractere!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Cod de identificare fiscala</mat-label>
+                <input matInput placeholder="Cod de identificare fiscala" formControlName="cif">
+                <mat-error *ngIf="AsociatieForm.controls['cif'].hasError('required')">
+                  Codul de identificare fiscala este <strong>obligatoriu</strong>
+                </mat-error>
+                <mat-error *ngIf="AsociatieForm.controls['cif'].hasError('maxlength')">
+                  Ati depasit <strong>limita</strong> de caractere!
+                </mat-error>
+                <mat-error *ngIf="AsociatieForm.controls['cif'].hasError('pattern')">
+                  Introduceti doar <strong>numere</strong>!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Autorizatie</mat-label>
+                <input matInput placeholder="Autorizatie" formControlName="autorizatie">
+                <mat-error *ngIf="AsociatieForm.controls['autorizatie'].hasError('required')">
+                  Autorizatia este <strong>obligatorie</strong>!
+                </mat-error>
+                <mat-error *ngIf="AsociatieForm.controls['autorizatie'].hasError('maxlength')">
+                  Ati depasit <strong>limita</strong> de caractere!
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="fill" formGroupName="judet">
+                <mat-label>Judet</mat-label>
+                <mat-select formControlName="id" [(ngModel)]="valueJudet" (selectionChange)="this.listLocalitati()" required>
+                  <mat-option *ngFor="let judet of judete" [value]="judet.id">
+                    {{ judet.nume }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="AsociatieForm.controls['judet'].hasError('required')">
+                  Selectati <strong>judetul</strong>!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="fill" formGroupName="localitate">
+                <mat-label>Localitate</mat-label>
+                <mat-select formControlName="id"  [(ngModel)]="valueLocalitate" required>
+                  <mat-option *ngFor="let localitate of localitati" [value]="localitate.id">
+                    {{ localitate.nume }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="AsociatieForm.controls['localitate'].hasError('required')">
+                  Selectati <strong>localitatea</strong>!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Strada</mat-label>
+                <input matInput placeholder="Strada" formControlName="strada">
+                <mat-error *ngIf="AsociatieForm.controls['strada'].hasError('required')">
+                  Introduceti <strong>strada</strong>!
+                </mat-error>
+                <mat-error *ngIf="AsociatieForm.controls['strada'].hasError('maxlength')">
+                  Ati depasit <strong>limita</strong> de caractere!
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Numar</mat-label>
+                <input matInput placeholder="Numar" formControlName="numar">
+                <mat-error *ngIf="AsociatieForm.controls['numar'].hasError('required')">
+                  Introduceți <strong>numarul străzii</strong>!
+                </mat-error>
+                <mat-error *ngIf="AsociatieForm.controls['numar'].hasError('maxlength')">
+                  Ati depasit <strong>limita</strong> de caractere!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Bloc</mat-label>
+                <input matInput placeholder="Bloc" formControlName="bloc">
+                <mat-error *ngIf="AsociatieForm.controls['bloc'].hasError('required')">
+                  Introduceți <strong>blocul</strong>!
+                </mat-error>
+                <mat-error *ngIf="AsociatieForm.controls['bloc'].hasError('maxlength')">
+                  Ati depasit <strong>limita</strong> de caractere!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Scara</mat-label>
+                <input matInput placeholder="Scara" formControlName="scara">
+                <mat-error *ngIf="AsociatieForm.controls['scara'].hasError('required')">
+                  Introduceti <strong>scara</strong>!
+                </mat-error>
+                <mat-error *ngIf="AsociatieForm.controls['scara'].hasError('maxlength')">
+                  Ati depasit <strong>limita</strong> de caractere!
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-card-subtitle>*Datele sunt obligatorii.</mat-card-subtitle>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="container">
+            <div class="row">
+              <div class="col button-align-center">
+                <button mat-raised-button color="primary" type="submit">Actualizare</button>
+              </div>
+              <div class="col button-align-center">
+                <a mat-flat-button routerLink="/">Anulare </a>
+              </div>
+            </div>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</app-asociatie-header>

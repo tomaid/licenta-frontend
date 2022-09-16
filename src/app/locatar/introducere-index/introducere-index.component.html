@@ -1,0 +1,57 @@
+<app-locatar-header>
+
+  <mat-card class="servicii-card">
+    <mat-card-header>
+      <div class="alignleft">
+        <mat-card-title-group><mat-card-title>Contoare</mat-card-title>
+        </mat-card-title-group>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+        <!--  Coloana denumire -->
+        <ng-container matColumnDef="denumire" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef>Serviciu/contor</th>
+          <td mat-cell *matCellDef="let contor"> {{this.upperLowerTitleCaseService.titleCase(contor.numeServiciu)}}:  {{this.upperLowerTitleCaseService.titleCase(contor.numeContor)}} </td>
+        </ng-container>
+        <!--  Coloana ultimul index -->
+        <ng-container matColumnDef="ultimul" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef>Ultimul index</th>
+          <td mat-cell *matCellDef="let contor"> {{contor.ultimulIndex | number}}</td>
+        </ng-container>
+        <!--  Coloana index curent -->
+        <ng-container matColumnDef="curent" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef>Index curent</th>
+          <td mat-cell *matCellDef="let contor">
+            <mat-form-field appearance="fill">
+              <mat-label>Index curent</mat-label>
+              <mat-hint *ngIf="contor.autoCitit">Index autocitit de administrator</mat-hint>
+            <input matInput placeholder="Index curent" [(ngModel)]="contor.indexCurent" [disabled]="contor.autoCitit">
+          </mat-form-field></td>
+        </ng-container>
+        <!--  Coloana actiuni -->
+        <ng-container matColumnDef="actiuni" class="mat-column-actiuni">
+          <th mat-header-cell *matHeaderCellDef> Actiuni </th>
+          <td mat-cell *matCellDef="let contor">
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Salvare" color="primary" (click)="setIndex(contor)" [hidden]="contor.autoCitit">
+              <mat-icon>edit</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Salvare</span>
+            </button>
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Stergere" color="basic" (click)="istoricIndecsi(contor.idServiciu, contor.id, contor.numeServiciu, contor.numeContor)">
+              <mat-icon>list</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Istoric indecsi</span>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+
+        <!-- Row shown when there is no matching data. -->
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+</app-locatar-header>

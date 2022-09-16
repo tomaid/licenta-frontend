@@ -1,0 +1,121 @@
+<app-locatar-header>
+  <mat-card class="servicii-card">
+    <mat-card-header>
+      <div class="alignleft">
+        <mat-card-title-group><mat-card-title>Avizier pentru luna {{this.monthSwitch.switchLuna(this.luna)}} {{anul}}</mat-card-title>
+        </mat-card-title-group>
+      </div>
+      <div>
+      </div>
+      <div class="alignright">
+        <mat-card-actions>
+          <mat-form-field appearance="fill">
+            <mat-label>Luna si anul</mat-label>
+            <input matInput [matDatepicker]="dp" [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp
+                            startView="year"
+                            (monthSelected)="setMonthAndYear($event, dp)"
+                            panelClass="example-month-picker">
+            </mat-datepicker>
+          </mat-form-field>
+        </mat-card-actions>
+      </div>
+    </mat-card-header>
+    <mat-card-content class="middle-align">
+      <table multiTemplateDataRows class="mat-elevation-z8 table-style" matSort>
+        <thead>
+        <tr>
+          <th rowspan="2" class="align-center table-td-boarder">Apartament</th>
+          <th rowspan="2" class="align-center table-td-boarder">Nr. locatari</th>
+          <th rowspan="2" class="align-center table-td-boarder">Suprafata ap.</th>
+          <th rowspan="2" class="align-center table-td-boarder" >CPI</th>
+          <th colspan=2 class="align-center table-td-boarder" *ngFor="let item of subArray">{{item}}</th>
+          <th rowspan="2" class="align-center table-td-boarder">Total</th>
+        </tr>
+        <tr>
+          <th class="align-center table-td-boarder" *ngFor="let itemd of subSubArray">{{itemd}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-tr-boarder" *ngFor="let items of itemsArray ">
+          <td class="align-center table-td-boarder">{{items.numarApartament}}</td>
+          <td class="align-center table-td-boarder">{{items.numarLocatari}}</td>
+          <td class="align-center table-td-boarder">{{items.suprafataApartament}}</td>
+          <td class="align-center table-td-boarder">{{items.cpi}}</td>
+          <ng-container *ngFor="let detailii of items.avizierRandDtoList">
+            <td class="align-center table-td-boarder"> {{detailii.consum}}
+            </td>
+            <td class="align-center table-td-boarder">{{detailii.suma}}</td>
+          </ng-container>
+          <td class="align-center table-td-boarder">{{items.sumaDePlatit}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="row padding-top">
+        <div class="col">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title>Cheltuieli</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <table mat-table [dataSource]="dataSourceCheltuieli" multiTemplateDataRows class="mat-elevation-z8">
+                <!--  Coloana denumire -->
+                <ng-container matColumnDef="numeCheltuiala" class="mat-column-nume">
+                  <th mat-header-cell class="mat-column-nume" *matHeaderCellDef>Denumire</th>
+                  <td mat-cell *matCellDef="let cheltuiala"> {{this.upperLowerTitleCaseService.titleCase(cheltuiala.nume_cheltuiala)}} </td>
+                </ng-container>
+                <!--  pret -->
+                <ng-container matColumnDef="suma" class="mat-column-suma">
+                  <th class="mat-column-suma" mat-header-cell *matHeaderCellDef>Pret</th>
+                  <td mat-cell *matCellDef="let cheltuiala"> {{cheltuiala.suma}} RON</td>
+                </ng-container>
+                <!--  pret -->
+                <ng-container matColumnDef="calculNume" class="mat-column-text">
+                  <th mat-header-cell class="mat-column-text" *matHeaderCellDef>Formula de calcul</th>
+                  <td mat-cell *matCellDef="let cheltuiala"> {{cheltuiala.calcul_nume}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsCheltuieli"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsCheltuieli;"></tr>
+
+              </table>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="col">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title>Servicii</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+
+              <table mat-table [dataSource]="dataSourceServicii" multiTemplateDataRows class="mat-elevation-z8">
+                <!--  Coloana denumire -->
+                <ng-container matColumnDef="nume" class="mat-column-serviciu">
+                  <th mat-header-cell class="mat-column-serviciu" *matHeaderCellDef>Denumire serviciu</th>
+                  <td mat-cell *matCellDef="let serviciu"> {{this.upperLowerTitleCaseService.titleCase(serviciu.nume)}} </td>
+                </ng-container>
+                <!--  pret -->
+                <ng-container matColumnDef="consumLuna" class="mat-column-suma">
+                  <th class="mat-column-suma align-center" mat-header-cell *matHeaderCellDef>Consum contor general</th>
+                  <td mat-cell *matCellDef="let serviciu" class="align-center"> {{serviciu.consumLunar}} </td>
+                </ng-container>
+                <!--  pret -->
+                <ng-container matColumnDef="pret" class="mat-column-nume">
+                  <th mat-header-cell class="mat-column-nume align-center" *matHeaderCellDef>Pret</th>
+                  <td mat-cell *matCellDef="let serviciu" class="align-center"> {{serviciu.pret}} RON</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsServicii"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsServicii;"></tr>
+
+              </table>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</app-locatar-header>

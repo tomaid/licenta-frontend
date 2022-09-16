@@ -1,0 +1,169 @@
+<app-asociatie-header>
+  <mat-tab-group mat-align-tabs="start" animationDuration="0ms" [selectedIndex]="activeTab"  (selectedTabChange)="setTab($event.index)">
+    <mat-tab label="Servicii oferite">
+      <mat-card class="servicii-card">
+        <mat-card-header>
+          <div class="alignleft">
+          <mat-card-title-group><mat-card-title>Servicii</mat-card-title>
+            </mat-card-title-group>
+        </div>
+        <div class="alignright">
+          <mat-card-actions>
+          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Creare serviciu" color="primary" (click)="setTab(1)">
+            <mat-icon>add_box</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Creare serviciu</span>
+          </button>
+          </mat-card-actions>
+        </div>
+        </mat-card-header>
+        <mat-card-content>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" multiTemplateDataRows>
+
+
+        <!--  Coloana nume -->
+        <ng-container matColumnDef="nume" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef>Nume serviciu</th>
+          <td mat-cell *matCellDef="let serviciu"> {{this.upperLowerTitleCaseService.titleCase(serviciu.nume)}} </td>
+        </ng-container>
+
+        <!--  Coloana pret -->
+        <ng-container matColumnDef="pret" class="mat-column-pret">
+          <th mat-header-cell *matHeaderCellDef> Pret </th>
+          <td mat-cell *matCellDef="let serviciu"> {{serviciu.pret}} RON</td>
+        </ng-container>
+        <!--  Coloana actiuni -->
+        <ng-container matColumnDef="actiuni" class="mat-column-actiuni">
+          <th mat-header-cell *matHeaderCellDef> Actiuni </th>
+          <td mat-cell *matCellDef="let serviciu">
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Editare" color="primary" (click)="openDialog(serviciu)">
+            <mat-icon>edit</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Editare</span>
+          </button>
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Stergere" color="warn" (click)="deleteService(serviciu)">
+              <mat-icon>delete</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Stergere</span>
+            </button>
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Contoare" color="basic" (click)="contoare(serviciu)">
+              <mat-icon>view_stream</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Contoare</span>
+            </button>
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Index" (click)="getdata(serviciu.id);(expandedElement = expandedElement === serviciu ? null : serviciu); $event.stopPropagation()">
+              <mat-icon *ngIf="expandedElement !== serviciu">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="expandedElement === serviciu">keyboard_arrow_up</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Introducere index contor general</span>
+            </button>
+          </td>
+        </ng-container>
+        <!-- coloana expandata -->
+        <ng-container matColumnDef="expandedDetail">
+
+          <td mat-cell *matCellDef="let serviciu" [attr.colspan]="displayedColumns.length">
+            <div class="serviciu-detail"
+                 [@detailExpand]="serviciu == expandedElement ? 'expanded' : 'collapsed'">
+
+              <div class=“tabela-index”>
+                <div id=“tabela-index-corp”>
+                  <!--aici-->
+                  <div class="tabela-index-rand" *ngIf="(contorGeneral)">
+                    <form [formGroup]="indexForm" novalidate (ngSubmit)="setIndex(contorGeneral, indexCurent.value)" layout-align="center">
+                      <div class="tabela-index-celula">
+                        <p style="font-weight:bold">{{upperLowerTitleCaseService.titleCase(contorGeneral.numeContor)}}</p>
+                      </div>
+                      <div class="tabela-index-celula">
+                        Ultimul index: {{contorGeneral.ultimulIndex}}
+                      </div>
+                      <div class="tabela-index-celula">
+                        <mat-form-field appearance="fill">
+                          <mat-label>Index curent</mat-label>
+                          <input matInput placeholder="Index curent" value="{{contorGeneral.indexCurent}}" #indexCurent>
+                        </mat-form-field>
+                      </div>
+                      <div class="tabela-index-celula">
+                        <button mat-raised-button color="primary" type="submit">Salvare</button>
+                      </div>
+                      <div class="tabela-index-celula">
+                        <button type="button" mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Contoare" color="basic" (click)="istoricIndecsi(contorGeneral.idServiciu, contorGeneral.id, contorGeneral.numeServiciu, contorGeneral.numeContor)">
+                          <mat-icon>view_stream</mat-icon>
+                          <span *ngIf="!(isHandset$ | async)">Istoric</span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <!--aici-->
+
+                </div>
+              </div>
+
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="serviciu-detail-row"></tr>
+      </table>
+
+      </mat-card-content>
+    </mat-card>
+    </mat-tab>
+    <mat-tab label="Creare serviciu">
+      <div class="middle-align container">
+        <form [formGroup]="serviciuForm" novalidate (ngSubmit)="onCreareServiciu()" layout-align="center">
+          <mat-card class="creare-asociatie-card">
+            <mat-card-header>
+              <mat-card-title>Creare serviciu</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Nume serviciu</mat-label>
+                    <input matInput placeholder="Nume serviciu" formControlName="nume">
+                    <mat-error *ngIf="serviciuForm.controls['nume'].hasError('required')">
+                      Numele serviciului este <strong>obligatoriu</strong>!
+                    </mat-error>
+                    <mat-error *ngIf="serviciuForm.controls['nume'].hasError('maxlength')">
+                      Ati depasit <strong>limita</strong> de caractere!
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Prețul serviciului</mat-label>
+                    <input matInput placeholder="Prețul serviciului" formControlName="pret">
+                    <mat-error *ngIf="serviciuForm.controls['pret'].hasError('required')">
+                      Introduceți <strong>prețul</strong> serviciului!
+                    </mat-error>
+                    <mat-error *ngIf="serviciuForm.controls['pret'].hasError('maxlength')">
+                      Ati depasit <strong>limita</strong> de caractere!
+                    </mat-error>
+                    <mat-error *ngIf="serviciuForm.controls['pret'].hasError('pattern')">
+                      Introduceti doar <strong>numere</strong>!
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <mat-card-subtitle>*Datele sunt obligatorii.</mat-card-subtitle>
+            </mat-card-content>
+            <mat-card-actions>
+              <div class="container">
+                <div class="row">
+                  <div class="col button-align-center">
+                    <button mat-raised-button color="primary" type="submit">Creare serviciu</button>
+                  </div>
+                  <div class="col button-align-center">
+                    <a mat-flat-button (click)="setTab(0)">Anulare </a>
+                  </div>
+                </div>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+</app-asociatie-header>

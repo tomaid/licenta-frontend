@@ -1,0 +1,61 @@
+<app-asociatie-header>
+
+  <mat-card class="servicii-card">
+    <mat-card-header>
+      <div class="alignleft">
+        <mat-card-title-group><mat-card-title>Contoare apartamente pentru serviciul: "{{this.numeServiciu}}"</mat-card-title>
+        </mat-card-title-group>
+      </div>
+      <div class="alignright">
+        <mat-card-actions>
+          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Inapoi" (click)="back('/asociatie/servicii')">
+            <mat-icon>arrow_back</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Inapoi</span>
+          </button>
+
+          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Creare contor" color="primary" (click)="creareContor()">
+            <mat-icon>add_box</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Creare contor</span>
+          </button>
+        </mat-card-actions>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="contoare" class="mat-elevation-z8">
+
+        <!--  Coloana nume -->
+        <ng-container matColumnDef="nume" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef>Nume contor</th>
+          <td mat-cell *matCellDef="let contor"> {{this.upperLowerTitleCaseService.titleCase(contor.nume)}} </td>
+        </ng-container>
+        <!--  Coloana numar -->
+        <ng-container matColumnDef="numeApartament" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef>Numar apartament</th>
+          <td mat-cell *matCellDef="let contor"> {{this.upperLowerTitleCaseService.upperCase(contor.numeApartament)}} </td>
+        </ng-container>
+        <!--  Coloana actiuni -->
+        <ng-container matColumnDef="actiuni" class="mat-column-actiuni">
+          <th mat-header-cell *matHeaderCellDef> Actiuni </th>
+          <td mat-cell *matCellDef="let contor">
+            <button mat-raised-button [hidden]="(contor.general)" [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Editare" color="primary" (click)="modificareContor(contor)">
+              <mat-icon>edit</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Editare</span>
+            </button>
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Stergere" color="warn" (click)="stergereContor(contor)">
+              <mat-icon>delete</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Stergere</span>
+            </button>
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Stergere" (click)="istoricIndecsi(contor)">
+              <mat-icon>view_stream</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Istoric indecsi</span>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+</app-asociatie-header>
+

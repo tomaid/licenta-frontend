@@ -1,0 +1,117 @@
+<app-asociatie-header>
+
+  <mat-card class="servicii-card">
+    <mat-card-header>
+      <div class="alignleft">
+        <mat-card-title-group><mat-card-title>Apartamente</mat-card-title>
+        </mat-card-title-group>
+      </div>
+      <div>
+        <mat-form-field appearance="standard">
+          <mat-label>Filtrare</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="ex: 6A" #cautare_apartament>
+        </mat-form-field>
+      </div>
+      <div class="alignright">
+        <mat-card-actions>
+          <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Creare apartament" color="primary" (click)="creareApartament()">
+            <mat-icon>add_box</mat-icon>
+            <span *ngIf="!(isHandset$ | async)">Creare apartament</span>
+          </button>
+        </mat-card-actions>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+        <!--  Coloana nume -->
+        <ng-container matColumnDef="nume_prenume" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef>Nume</th>
+          <td mat-cell *matCellDef="let apartament"> {{this.upperLowerTitleCaseService.titleCase(apartament.nume)}}  {{this.upperLowerTitleCaseService.titleCase(apartament.prenume)}} </td>
+        </ng-container>
+        <!--  Coloana numar -->
+        <ng-container matColumnDef="numar" class="mat-column-nume">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Numar apartament</th>
+          <td mat-cell *matCellDef="let apartament"> {{this.upperLowerTitleCaseService.upperCase(apartament.numar)}}  </td>
+        </ng-container>
+        <!--  Coloana actiuni -->
+        <ng-container matColumnDef="actiuni" class="mat-column-actiuni">
+          <th mat-header-cell *matHeaderCellDef> Actiuni </th>
+          <td mat-cell *matCellDef="let apartament">
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Editare" color="primary" (click)="modificareApartament(apartament)">
+              <mat-icon>edit</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Editare</span>
+            </button>
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Stergere" color="warn" (click)="stergereApartament(apartament)">
+              <mat-icon>delete</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Stergere</span>
+            </button>
+            <button mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Index" (click)="getdata(apartament.id);(expandedElement = expandedElement === apartament ? null : apartament); $event.stopPropagation()">
+              <mat-icon *ngIf="expandedElement !== apartament">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="expandedElement === apartament">keyboard_arrow_up</mat-icon>
+              <span *ngIf="!(isHandset$ | async)">Introducere index</span>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- coloana expandata -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let apartament" [attr.colspan]="displayedColumns.length">
+            <div class="apartament-detail"
+                 [@detailExpand]="apartament == expandedElement ? 'expanded' : 'collapsed'">
+
+              <div class=“tabela-index”>
+                <div id=“tabela-index-corp”>
+                  <!--aici-->
+                  <div class=“tabela-index-rand” *ngFor="let c of contorIndecsi;">
+                    <form [formGroup]="indexForm" novalidate (ngSubmit)="setIndex(c, indexCurent.value, apartament.id)" layout-align="center">
+                    <div class="tabela-index-celula">
+                      <p style="font-weight:bold">{{upperLowerTitleCaseService.titleCase(c.numeServiciu)}}</p>
+                    </div>
+                    <div class="tabela-index-celula">
+                      {{upperLowerTitleCaseService.titleCase(c.numeContor)}}
+                    </div>
+                    <div class="tabela-index-celula">
+                     Ultimul index: {{c.ultimulIndex}}
+                    </div>
+                    <div class="tabela-index-celula">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Index curent</mat-label>
+                        <input matInput placeholder="Index curent" value="{{c.indexCurent}}" #indexCurent>
+                      </mat-form-field>
+                    </div>
+                    <div class="tabela-index-celula">
+                      <button mat-raised-button color="primary" type="submit">Salvare</button>
+                    </div>
+                    <div class="tabela-index-celula">
+                      <button type="button" mat-raised-button [class.mat-icon-button]="(isHandset$ | async) === true"  class="buttonpadding" aria-label="Contoare" color="basic" (click)="istoricIndecsi(c.idServiciu, c.id, c.numeServiciu, c.numeContor, apartament.numar)">
+                        <mat-icon>view_stream</mat-icon>
+                        <span *ngIf="!(isHandset$ | async)">Istoric</span>
+                      </button>
+                    </div>
+                    </form>
+                  </div>
+                  <!--aici-->
+
+                </div>
+              </div>
+
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">Nu am gasit apartamentul cu filtrul: "{{cautare_apartament.value}}"</td>
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="apartament-detail-row"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+
+</app-asociatie-header>

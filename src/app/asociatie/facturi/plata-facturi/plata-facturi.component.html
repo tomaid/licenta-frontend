@@ -1,0 +1,57 @@
+<div class="container">
+  <form [formGroup]="plataForm" novalidate (ngSubmit)="plata()" layout-align="center">
+    <mat-card class="modificare-asociatie-card">
+      <mat-card-header>
+        <mat-card-title>Plata factura pentru apartamentul {{upperLowerTitleCaseService.upperCase(facturaInfo.apartamentNumar)}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Suma totală</mat-label>
+              <input matInput placeholder="Suma totală" formControlName="valoare" (keyup)="verificare(sumaIntrodusa.value)" #sumaIntrodusa>
+              <mat-error *ngIf="plataForm.controls['valoare'].hasError('required')">
+                Introduceți <strong>suma totala</strong>!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['valoare'].hasError('maxlength')">
+                Ati depasit <strong>limita</strong> de caractere!
+              </mat-error>
+              <mat-error *ngIf="plataForm.controls['valoare'].hasError('pattern')">
+                Introduceti doar <strong>cifre</strong>!
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Metoda plata</mat-label>
+              <mat-select [value]="metoda" formControlName="metoda">
+                <mat-option [value]="1">
+                  CARD
+                </mat-option>
+                <mat-option [value]="2">
+                  Numerar
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-card-subtitle>*Datele sunt obligatorii.</mat-card-subtitle>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="container">
+          <div class="row">
+            <div class="col button-align-center">
+              <button mat-raised-button color="primary" type="submit">Plată factura</button>
+            </div>
+            <div class="col button-align-center">
+              <a mat-flat-button mat-dialog-close>Inchide</a>
+            </div>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
+
+
+

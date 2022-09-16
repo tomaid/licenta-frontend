@@ -1,0 +1,52 @@
+<mat-toolbar color="primary" class="toolbar-container-top">
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Navigatie">
+    <mat-icon (click)="drawer.toggle()"
+              *ngIf="isHandset$ | async">menu</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Administrezi apartamentul </span> <span>{{title}}</span>
+  </button>
+  <span class="spacer"></span>
+  <mat-form-field appearance="legacy" class="mat-select-asoc" *ngIf="showMenu">
+    <mat-label class="label-asoc">Schimbă apartamentul</mat-label>
+    <mat-select [(value)]="apartamentId" (selectionChange)="onSelectChange()">
+      <mat-option *ngFor="let apartament of apartamente" [value]="apartament.id">
+        {{apartament.strada}} {{apartament.numar}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <span class="spacer"></span>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  routerLink="/asociatie/creare-asociatie" aria-label="Creare asociatie">
+    <mat-icon>create_new_folder</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Creare asociatie</span>
+  </button>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  routerLink="/asociatie" aria-label="Locatar">
+    <mat-icon>home</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Administreaza asociatie</span>
+  </button>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  aria-label="Ajutor" (click)="ajutor()">
+    <mat-icon>help_outline</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Ajutor</span>
+  </button>
+  <button mat-button [class.mat-icon-button]="(isHandset$ | async) === true"  (click)="logout()" aria-label="Iesire">
+    <mat-icon>highlight_off</mat-icon>
+    <span *ngIf="!(isHandset$ | async)">Iesire</span>
+  </button>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
+    <mat-nav-list *ngIf="showMenu">
+      <a  mat-list-item [routerLink]="'/locatar/apartament/'+this.apartamentId +'/avizier'">Avizier</a>
+      <a  mat-list-item [routerLink]="'/locatar/apartament/'+this.apartamentId +'/factura'">Facturi</a>
+      <a  mat-list-item [routerLink]="'/locatar/apartament/'+this.apartamentId +'/index'">Introducere index</a>
+      <a  mat-list-item [routerLink]="'/locatar/apartament/'+this.apartamentId +'/upgrade'">Optimizare consum </a>
+
+      <a  mat-list-item [routerLink]="'/detalii-cont'">Date cont</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
