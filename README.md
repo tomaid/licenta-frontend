@@ -9,7 +9,7 @@ asociatii de locatari. Aplicatia are doua interfete:
 
 Fiecare interfata are propriile actiuni.
 
-github paths:
+Github paths:
 
 - backend: https://github.com/tomaid/licenta-backend
 
