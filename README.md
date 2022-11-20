@@ -8,5 +8,7 @@ asociatii de locatari. Aplicatia are doua interfete:
 - Proprietar
 Fiecare interfata are propriile actiuni.
 Am încărcat codul pe github:
-backend - https://github.com/tomaid/licenta-backend
-frontend- https://github.com/tomaid/licenta-frontend
+
+- backend: https://github.com/tomaid/licenta-backend
+
+- frontend: https://github.com/tomaid/licenta-frontend
