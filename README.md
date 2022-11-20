@@ -6,7 +6,7 @@ Aceasta aplicație a fost tema pentru proiectul de licență. Aplicația permite
 asociatii de locatari. Aplicatia are doua interfete:
 - Administrator
 - Proprietar
-- 
+
 Fiecare interfata are propriile actiuni.
 
 github paths:
