@@ -6,8 +6,10 @@ Aceasta aplicație a fost tema pentru proiectul de licență. Aplicația permite
 asociatii de locatari. Aplicatia are doua interfete:
 - Administrator
 - Proprietar
+- 
 Fiecare interfata are propriile actiuni.
-Am încărcat codul pe github:
+
+github paths:
 
 - backend: https://github.com/tomaid/licenta-backend
 
